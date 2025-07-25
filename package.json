@@ -1,13 +1,23 @@
 {
   "name": "ghost",
   "version": "1.0.0",
-  "description": "",
+  "description": "Interactive carousel component built with Lit",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
   },
-  "keywords": [],
+  "keywords": ["carousel", "lit", "web-components"],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.9.0"
+  "packageManager": "pnpm@10.9.0",
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "gh-pages": "^6.0.0"
+  },
+  "dependencies": {
+    "lit": "^3.0.0"
+  }
 }
