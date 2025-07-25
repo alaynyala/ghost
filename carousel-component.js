@@ -100,15 +100,142 @@ export class CarouselComponent extends LitElement {
     });
   }
 
-
-
-  
-
- render() {
+  render() {
     return html`
+      <div class="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-left">
+            <div class="navigation-buttons-dtp">
+              <button class="carousel-button-lt" @click=${this.prevSlide}>
+                <svg
+                  width="18"
+                  height="15"
+                  viewBox="0 0 18 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8.66667 1L2.00001 7.66667L8.66667 14.3333"
+                    stroke="white"
+                    stroke-width="1.5"
+                  />
+                  <path
+                    d="M2 7.66665L18 7.66666"
+                    stroke="white"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </button>
+              <button class="carousel-button-rt" @click=${this.nextSlide}>
+                <svg
+                  width="18"
+                  height="15"
+                  viewBox="0 0 18 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.33333 1L16 7.66667L9.33333 14.3333"
+                    stroke="white"
+                    stroke-width="1.5"
+                  />
+                  <path
+                    d="M16 7.66665L-4.76837e-07 7.66666"
+                    stroke="white"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="carousel-left-content">
+              <h2>The Roberts Family's Story</h2>
+              <p>
+                The circumstances that might lead to homelessness can include
+                loss of income or transportation, a falling out with loved ones,
+                or an abrupt economic downturn. For Brandon and Jennifer, it was
+                all of these things.
+              </p>
+              <button class="carousel-button-cta">
+                <span>
+                  More Client Stories
+                  <svg
+                    width="14"
+                    height="13"
+                    viewBox="0 0 14 13"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7 1.5L12 6.5L7 11.5"
+                      stroke="#262861"
+                      stroke-width="1.5"
+                    />
+                    <path
+                      d="M12 6.5L0 6.5"
+                      stroke="#262861"
+                      stroke-width="1.5"
+                    />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="carousel-right">
+            <div class="slider-container-wrapper">
+            <div class="navigation-buttons-t-mb">
+              <button class="carousel-button-lt" @click=${this.prevSlide}>
+                <svg
+                  width="18"
+                  height="15"
+                  viewBox="0 0 18 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8.66667 1L2.00001 7.66667L8.66667 14.3333"
+                    stroke="white"
+                    stroke-width="1.5"
+                  />
+                  <path
+                    d="M2 7.66665L18 7.66666"
+                    stroke="white"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </button>
+              <button class="carousel-button-rt" @click=${this.nextSlide}>
+                <svg
+                  width="18"
+                  height="15"
+                  viewBox="0 0 18 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M9.33333 1L16 7.66667L9.33333 14.3333"
+                    stroke="white"
+                    stroke-width="1.5"
+                  />
+                  <path
+                    d="M16 7.66665L-4.76837e-07 7.66666"
+                    stroke="white"
+                    stroke-width="1.5"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="slider-dots">
+              ${Array.from({length: this.totalSlides}).map((_, i) => html`
+              <div class="slider-dot ${i === this.currentSlide ? 'active' : ''}" @click=${() => this.goToSlide(i)}></div>
+            `)}
+              </div>
               <div class="slider-container">
                 <slot></slot>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
     `;
   }
 }
