@@ -182,13 +182,17 @@
             font-family: "Roboto", sans-serif;
             font-size: min(44px, max(48px));
             font-weight: 700;
-            color: #f2f2f2;
+            color: #fff;
             letter-spacing: -0.02em;
             line-height: 2.6875rem;
             margin: clamp(1rem, 2vw, 1.5rem) 0 0 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            animation: fadeIn 1s ease-out 0.6 both;
+            animation: fadeIn 1s ease-in-out 0.6;
+        }
+
+        h2.animated {
+            opacity: 1;
         }
 
         p {
@@ -197,11 +201,16 @@
             font-size: 1rem;
             font-weight: 400;
             line-height: 1.4rem;
-            color: #f2f2f2;
+            color: #fff;
             margin: clamp(1rem, 2vw, 1.5rem) 0 2.625rem 0;
+            opacity: 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            animation: fadeIn 1s ease-out 0.8s both;
+            animation: fadeIn 1s ease-out 0.7s forwards;
+        }
+
+        p.animated {
+            opacity: 1;
         }
 
         .play-button svg:hover {
@@ -268,7 +277,7 @@
 
             .slider-container {
                 position: relative; 
-                height: 48vh;
+                height: 42vh;
                 width: 100%;
                 z-index: 0; 
                 overflow: hidden;
@@ -306,9 +315,13 @@
                 padding-right: 0;
             }
             .carousel-left {
-                width: 100%;
+                width: 98%;
                 height: 100%;
                 order: 1;
+            }
+
+            .content-container {
+                width: 88%;
             }
 
             .carousel-button-cta {
@@ -322,7 +335,8 @@
             }
 
             .slider-container {
-                height: 38vh;
+                height: 40vh;
+                border-radius: 4px;
             }
             .slider-nav-buttons-dt {
                 display: none !important;
@@ -330,7 +344,7 @@
 
             .slider-nav-buttons-mb {
                 display: flex !important;
-                margin: 1em;
+                margin: 1.25em;
                 margin-left: 0;
             }
 
@@ -347,13 +361,30 @@
             .carousel {
                 height: 100vh;
             }
+
+            .carousel-inner {
+                gap: 1rem;
+                overflow-y: visible;
+            }
             .slider-container {
-                height: 50vh;
+                height: 52vh;
             }
             .slider-nav-buttons-mb {
                 display: flex !important;
-                margin: 1.5em;
+                margin: 1.5 0 1em;
                 margin-left: 0;
+            }
+
+            h2 {
+                width: 80%;
+                font-size: 2rem;
+                line-height: 1.96rem;
+            }
+
+            p {
+                font-size: .85rem;
+                line-height: 1.2rem;
+                margin-bottom: 1rem;
             }
         }
 
