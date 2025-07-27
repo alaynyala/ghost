@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carousel Component</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lit/3.1.0/index.js"></script>
     <style>
+        /*Animations*/
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
         /* Component Structure */
         body {
             width: 100vw;
@@ -17,9 +28,10 @@
             flex-direction: row;
             align-items: center;
             justify-content: end;
-            height: 888px;
+            height: min(888px, max(100%));
             width: 100%;
-            padding: 0;
+            padding: 10rem;
+            padding-right: 0;
             background: linear-gradient(90deg, #f15c22 0%, #f7931d 50%, #ffc840 100%);
             overflow: hidden;
         }
@@ -27,54 +39,26 @@
         .carousel-inner {
             display: grid;
             grid-template-columns: auto auto;
-            gap: 10px;
-            width: clamp(290px, 86vw, 88vw);
-            height: 530px;
-            border: solid 1px red;
-            overflow: hidden;
+            gap: 60px;
+            width: 100%;
+            height: min(530px, max(100vh));
+            overflow-x: hidden;
             align-content: center;
             align-items: center;
             justify-content: space-between;
         }
 
-        @media (max-width: 440px) {
-            .carousel-inner {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto;
-                height: auto;
-                gap: 20px;
-            }
-        }
-
         .carousel-left {
-            width: clamp(260px, 10vw, 298px);
+            width: clamp(260px, 298px, 300px);
+             
         }
 
         .carousel-right {
-            width: clamp(290px, 30vw, 1510px);
-            height: 510px;
+            width: clamp(290px, 1510px, 1520px);
+            height: 530px;
+            animation: fadeIn 1s ease-out 0.7s both;
         }
 
-        @media (max-width: 440px) {
-            .carousel-left {
-                width: 100%;
-                order: 2;
-            }
-            
-            .carousel-right {
-                width: 100%;
-                height: auto;
-                order: 1;
-            }
-            
-            .slider-nav-buttons-dt {
-                display: none;
-            }
-            
-            .slider-nav-buttons-mb {
-                display: flex;
-            }
-        }
 
         .slider-container {
             position: relative; 
@@ -85,24 +69,25 @@
         }
 
         /* Buttons */
-        .slider-nav-buttons-mb {
-            display: none;
-            flex-direction: row;
-            justify-content: start;
-            gap: 1.5em;
-        }
+      
 
-        .slider-nav-buttons-dt {
+        .slider-nav-buttons-dt, 
+        .slider-nav-buttons-mb {
             display: flex;
             flex-direction: row;
             justify-content: start;
             gap: 1.5em;
+            animation: fadeIn 1s linear .6s both;
+        }
+
+        .slider-nav-buttons-mb {
+            display: none;
         }
 
         .carousel-button-lt,
         .carousel-button-rt {
-            width: clamp(1.5rem, 4vw, 2rem);
-            height: clamp(1.5rem, 4vw, 2rem);
+            width: 2rem;
+            height: 2rem;
             background-color: #262861;
             border-radius: 50%;
             display: flex;
@@ -120,8 +105,7 @@
         }
 
         .carousel-button-cta {
-            min-width: 16.81em;
-            width: 100%;
+            min-width: 90%;
             height: clamp(2.5rem, 5vw, 2.5rem);
             background-color: #ffc840;
             border-radius: 34px;
@@ -135,6 +119,7 @@
             justify-content: center;
             align-items: center;
             transition: all 0.2s ease-in-out;
+            animation: fadeIn 1s ease-out 1s both;
         }
          
         .carousel-button-cta:hover {
@@ -190,10 +175,12 @@
         }
 
         /* Text Styles */
+
+        
         h2 {
-            width: 100%;
+            width: 90%;
             font-family: "Roboto", sans-serif;
-            font-size: clamp(1.75rem, 4vw, 2.85rem);
+            font-size: min(44px, max(48px));
             font-weight: 700;
             color: #f2f2f2;
             letter-spacing: -0.02em;
@@ -201,30 +188,20 @@
             margin: clamp(1rem, 2vw, 1.5rem) 0 0 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            animation: fadeIn 1s ease-out 0.6 both;
         }
 
         p {
-            max-width: 18.75rem;
+            width: 90%;
             font-family: "Roboto", sans-serif;
-            font-size: clamp(0.875rem, 2vw, 1rem);
+            font-size: 1rem;
             font-weight: 400;
             line-height: 1.4rem;
             color: #f2f2f2;
             margin: clamp(1rem, 2vw, 1.5rem) 0 2.625rem 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-        }
-
-        @media (max-width: 440px) {
-            .carousel {
-                height: auto;
-                min-height: 100vh;
-                align-items: stretch;
-            }
-            
-            p {
-                max-width: 100%;
-            }
+            animation: fadeIn 1s ease-out 0.8s both;
         }
 
         .play-button svg:hover {
@@ -232,9 +209,6 @@
             box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.6);
         }
 
-        .slide {
-            position: relative;
-        }
 
         .play-button {
             display: block;
@@ -251,10 +225,139 @@
 
         .slide img {
             width: 100%;
-            height: 100%;
+            height: auto;
             object-fit: cover;
             border-radius: 4px;
+            padding-right: 2em;
         }
+
+        @media (max-width: 1024px) {
+            .carousel {
+                padding: 6rem;
+                padding-right: 0;
+                height: 88vh;
+            }
+
+            .carousel-inner {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                align-content: space-around;
+                height: 100%;
+                gap: 30px;
+            }
+
+            .carousel-left {
+                width: 40vw;
+            }
+
+            .content-container {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: start;
+            }
+
+            .copy {
+                width: 100%;
+                height: 100%;
+            }
+
+            .carousel-right {
+                min-height: 0;
+            }
+
+            .slider-container {
+                position: relative; 
+                height: 48vh;
+                width: 100%;
+                z-index: 0; 
+                overflow: hidden;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .carousel-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .carousel-left {
+                width: 50vw;
+            }
+
+            .content-container {
+                width: 100%;
+            }
+
+            .carousel-right {
+                height: 40vh;
+            }
+            
+            .slider-container {
+                height: 40vh;
+            }
+        }
+
+
+        @media (max-width: 440px) {
+
+            .carousel {
+                padding: 3rem;
+                padding-right: 0;
+            }
+            .carousel-left {
+                width: 100%;
+                height: 100%;
+                order: 1;
+            }
+
+            .carousel-button-cta {
+                width: 90%;
+            }
+            
+            .carousel-right {
+                width: 100%;
+                height: 100%;
+                order: 2;
+            }
+
+            .slider-container {
+                height: 38vh;
+            }
+            .slider-nav-buttons-dt {
+                display: none !important;
+            }
+
+            .slider-nav-buttons-mb {
+                display: flex !important;
+                margin: 1em;
+                margin-left: 0;
+            }
+
+            .slide img {
+                width: 100%;
+                height: auto;  
+                aspect-ratio: 1 / 1; 
+                border-radius: 4px; 
+            }
+        }
+
+        @media (max-width: 393px) {
+
+            .carousel {
+                height: 100vh;
+            }
+            .slider-container {
+                height: 50vh;
+            }
+            .slider-nav-buttons-mb {
+                display: flex !important;
+                margin: 1.5em;
+                margin-left: 0;
+            }
+        }
+
+
     </style>
 </head>
 <body>
@@ -356,14 +459,20 @@
                 this.totalSlides = 3;
                 this.slides = document.querySelectorAll('.slide');
                 this.dots = document.querySelectorAll('.slider-dot');
+                this.desktopButtons = document.querySelector('.slider-nav-buttons-dt');
+                this.mobileButtons = document.querySelector('.slider-nav-buttons-mb');
                 
                 this.init();
-                window.addEventListener('resize', () => this.updateSlideVisibility());
+                window.addEventListener('resize', () => {
+                    this.updateSlideVisibility();
+                    this.updateButtonVisibility();
+                });
             }
 
             init() {
                 this.updateSlideVisibility();
                 this.updateDots();
+                this.updateButtonVisibility();
             }
 
             nextSlide() {
@@ -401,24 +510,24 @@
                     slide.style.transition = 'transform 0.3s ease-in-out';
                     
                     // Different aspect ratios and sizing based on viewport width
-                    if (window.innerWidth < 480) {
+                    if (window.innerWidth < 440) {
                         // Square aspect ratio for very small screens
                         slide.style.width = `${window.innerWidth - 24}px`;
-                        slide.style.height = `${window.innerWidth - 24}px`;
-                        slide.style.aspectRatio = '1 / 1';
+                        slide.style.aspectRatio = '1';
                         slide.style.maxWidth = 'none';
                         slide.style.maxHeight = 'none';
-                    } else if (window.innerWidth < 844) {
+                        slide.style.paddingRight = '2em';
+                    } else if (window.innerWidth < 768) {
                         // Scale down proportionally until 844px viewport width
-                        const scale = window.innerWidth / 844;
-                        slide.style.width = 'clamp(290px, 100%, 843px)';
+                        const scale = window.innerWidth / 768;
+                        slide.style.width = 'clamp(290px, 70vw, 843px)';
                         slide.style.height = 'auto';
                         slide.style.aspectRatio = '843 / 463';
                         slide.style.maxWidth = `${843 * scale}px`;
                         slide.style.maxHeight = `${463 * scale}px`;
                     } else {
                         // Full size for larger screens
-                        slide.style.width = 'clamp(290px, 100%, 843px)';
+                        slide.style.width = 'clamp(290px, 70vw, 843px)';
                         slide.style.height = 'auto';
                         slide.style.aspectRatio = '843 / 463';
                         slide.style.maxWidth = 'none';
@@ -439,7 +548,19 @@
                     }
                 });
             }
+            
+            updateButtonVisibility() {
+            if (window.innerWidth <= 440) {
+                //Mobile Layout
+                this.desktopButtons.style.display = 'none !important';
+                this.mobileButtons.style.display = 'flex !important';
+            } else {
+                //Desktop/Tablet Layout
+                this.desktopButtons.style.display = 'flex !important';
+                this.mobileButtons.style.display = 'none !important';
+            }
         }
+    }
 
         // Initialize carousel when page loads
         let carousel;
