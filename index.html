@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Carousel Component</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lit/3.1.0/index.js"></script>
+    <style>
+        /* Component Structure */
+        body {
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+        }
+
+        .carousel {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: end;
+            height: 888px;
+            width: 100%;
+            padding: 0;
+            background: linear-gradient(90deg, #f15c22 0%, #f7931d 50%, #ffc840 100%);
+            overflow: hidden;
+        }
+
+        .carousel-inner {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 10px;
+            width: clamp(290px, 86vw, 88vw);
+            height: 530px;
+            border: solid 1px red;
+            overflow: hidden;
+            align-content: center;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 440px) {
+            .carousel-inner {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto;
+                height: auto;
+                gap: 20px;
+            }
+        }
+
+        .carousel-left {
+            width: clamp(260px, 10vw, 298px);
+        }
+
+        .carousel-right {
+            width: clamp(290px, 30vw, 1510px);
+            height: 510px;
+        }
+
+        @media (max-width: 440px) {
+            .carousel-left {
+                width: 100%;
+                order: 2;
+            }
+            
+            .carousel-right {
+                width: 100%;
+                height: auto;
+                order: 1;
+            }
+            
+            .slider-nav-buttons-dt {
+                display: none;
+            }
+            
+            .slider-nav-buttons-mb {
+                display: flex;
+            }
+        }
+
+        .slider-container {
+            position: relative; 
+            height: 100%;
+            width: 100%;
+            z-index: 0; 
+            overflow: hidden;
+        }
+
+        /* Buttons */
+        .slider-nav-buttons-mb {
+            display: none;
+            flex-direction: row;
+            justify-content: start;
+            gap: 1.5em;
+        }
+
+        .slider-nav-buttons-dt {
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            gap: 1.5em;
+        }
+
+        .carousel-button-lt,
+        .carousel-button-rt {
+            width: clamp(1.5rem, 4vw, 2rem);
+            height: clamp(1.5rem, 4vw, 2rem);
+            background-color: #262861;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .carousel-button-lt:hover,
+        .carousel-button-rt:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-button-cta {
+            min-width: 16.81em;
+            width: 100%;
+            height: clamp(2.5rem, 5vw, 2.5rem);
+            background-color: #ffc840;
+            border-radius: 34px;
+            border: none;
+            cursor: pointer;
+            font-family: "Roboto Mono", monospace;
+            font-size: clamp(0.875rem, 1vw, 1rem);
+            font-weight: 500;
+            color: #262861;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease-in-out;
+        }
+         
+        .carousel-button-cta:hover {
+            background-color: #fff;
+        }
+
+        .carousel-button-cta span:hover {
+            gap: 0.75rem;
+        }
+
+        .carousel-button-cta span {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 0.6rem;
+            line-height: 1rem;
+            padding: clamp(0.25rem, 1vw, 0.8rem) clamp(0.5rem, 2vw, 1rem);
+            transition: all 0.2s ease-in-out;
+        }
+
+        /*Slider Dots*/
+        .slider-dots {
+            width: 100%;
+            height: 16px;
+            position: absolute;
+            bottom: 0;
+            margin: 0 auto;
+            align-self: end;
+            display: flex;
+            flex-direction: row;
+            justify-content: start;
+            align-items: center;
+            gap: clamp(0.5rem, 2vw, 1rem);
+            z-index: 10;
+        }
+
+        .slider-dot {
+            width: clamp(0.75rem, 2vw, 1rem);
+            height: clamp(0.75rem, 2vw, 1rem);
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.27);
+            cursor: pointer;
+            transition: all 0.1s ease-in-out;
+        }
+
+        .slider-dot:hover {
+            scale: 1.2;
+        }
+
+        .slider-dot.active {
+            background-color: rgb(255, 255, 255);
+        }
+
+        /* Text Styles */
+        h2 {
+            width: 100%;
+            font-family: "Roboto", sans-serif;
+            font-size: clamp(1.75rem, 4vw, 2.85rem);
+            font-weight: 700;
+            color: #f2f2f2;
+            letter-spacing: -0.02em;
+            line-height: 2.6875rem;
+            margin: clamp(1rem, 2vw, 1.5rem) 0 0 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        p {
+            max-width: 18.75rem;
+            font-family: "Roboto", sans-serif;
+            font-size: clamp(0.875rem, 2vw, 1rem);
+            font-weight: 400;
+            line-height: 1.4rem;
+            color: #f2f2f2;
+            margin: clamp(1rem, 2vw, 1.5rem) 0 2.625rem 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        @media (max-width: 440px) {
+            .carousel {
+                height: auto;
+                min-height: 100vh;
+                align-items: stretch;
+            }
+            
+            p {
+                max-width: 100%;
+            }
+        }
+
+        .play-button svg:hover {
+            scale: 1.1;
+            box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.6);
+        }
+
+        .slide {
+            position: relative;
+        }
+
+        .play-button {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all .3s ease;
+            z-index: 5;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-left">
+                <div class="content-container">
+                    <div class="slider-nav-buttons-dt">
+                        <button class="carousel-button-lt" onclick="carousel.prevSlide()">
+                            <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.66667 1L2.00001 7.66667L8.66667 14.3333" stroke="white" stroke-width="1.5" />
+                                <path d="M2 7.66665L18 7.66666" stroke="white" stroke-width="1.5" />
+                            </svg>
+                        </button>
+                        <button class="carousel-button-rt" onclick="carousel.nextSlide()">
+                            <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9.33333 1L16 7.66667L9.33333 14.3333" stroke="white" stroke-width="1.5" />
+                                <path d="M16 7.66665L-4.76837e-07 7.66666" stroke="white" stroke-width="1.5" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="copy">
+                        <h2>The Roberts Family's Story</h2>
+                        <p>The circumstances that might lead to homelessness
+                            can include loss of income or transportation, a
+                            falling out with loved ones,
+                            or an abrupt economic downturn.
+                            For Brandon and Jennifer, it
+                            was all of these things.</p>
+                    </div>
+                    <button class="carousel-button-cta">
+                        <span>
+                            More Client Stories
+                            <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M7 1.5L12 6.5L7 11.5" stroke="#262861" stroke-width="1.5" />
+                                <path d="M12 6.5L0 6.5" stroke="#262861" stroke-width="1.5" />
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+            <div class="carousel-right">
+                <div class="slider-nav-buttons-mb">
+                    <button class="carousel-button-lt" onclick="carousel.prevSlide()">
+                        <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.66667 1L2.00001 7.66667L8.66667 14.3333" stroke="white" stroke-width="1.5" />
+                            <path d="M2 7.66665L18 7.66666" stroke="white" stroke-width="1.5" />
+                        </svg>
+                    </button>
+                    <button class="carousel-button-rt" onclick="carousel.nextSlide()">
+                        <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9.33333 1L16 7.66667L9.33333 14.3333" stroke="white" stroke-width="1.5" />
+                            <path d="M16 7.66665L-4.76837e-07 7.66666" stroke="white" stroke-width="1.5" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="slider-container">
+                    <div class="slide" id="slide-0">
+                        <button class="play-button">
+                            <svg width="68" height="40" viewBox="0 0 68 40" fill="none">
+                                <rect width="68" height="40" rx="4" fill="#F15C22" />
+                                <path d="M27.4472 27.2764C26.7823 27.6088 26 27.1253 26 26.382V13.618C26 12.8747 26.7823 12.3912 27.4472 12.7236L40.2111 19.1056C40.9482 19.4741 40.9482 20.5259 40.2111 20.8944L27.4472 27.2764Z" fill="#FEFEFE" />
+                            </svg>
+                        </button>
+                        <img src="https://imagedelivery.net/XPp5SsZ1VHMdZq-5zMXYKA/13072a73-5026-4557-15f9-5629f06faa00/public" alt="Slide 1">
+                    </div>
+                    <div class="slide" id="slide-1">
+                        <button class="play-button">
+                            <svg width="68" height="40" viewBox="0 0 68 40" fill="none">
+                                <rect width="68" height="40" rx="4" fill="#F15C22" />
+                                <path d="M27.4472 27.2764C26.7823 27.6088 26 27.1253 26 26.382V13.618C26 12.8747 26.7823 12.3912 27.4472 12.7236L40.2111 19.1056C40.9482 19.4741 40.9482 20.5259 40.2111 20.8944L27.4472 27.2764Z" fill="#FEFEFE" />
+                            </svg>
+                        </button>
+                        <img src="https://imagedelivery.net/XPp5SsZ1VHMdZq-5zMXYKA/2b9b764a-751d-491b-1674-07b9ba05dc00/public" alt="Slide 2">
+                    </div>
+                    <div class="slide" id="slide-2">
+                        <button class="play-button">
+                            <svg width="68" height="40" viewBox="0 0 68 40" fill="none">
+                                <rect width="68" height="40" rx="4" fill="#F15C22" />
+                                <path d="M27.4472 27.2764C26.7823 27.6088 26 27.1253 26 26.382V13.618C26 12.8747 26.7823 12.3912 27.4472 12.7236L40.2111 19.1056C40.9482 19.4741 40.9482 20.5259 40.2111 20.8944L27.4472 27.2764Z" fill="#FEFEFE" />
+                            </svg>
+                        </button>
+                        <img src="https://imagedelivery.net/XPp5SsZ1VHMdZq-5zMXYKA/7fa1e0a1-d30a-447e-7d19-6ddbaf333400/public" alt="Slide 3">
+                    </div>
+                    <div class="slider-dots" id="slider-dots">
+                        <div class="slider-dot active" onclick="carousel.goToSlide(0)"></div>
+                        <div class="slider-dot" onclick="carousel.goToSlide(1)"></div>
+                        <div class="slider-dot" onclick="carousel.goToSlide(2)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class SimpleCarousel {
+            constructor() {
+                this.currentSlide = 0;
+                this.totalSlides = 3;
+                this.slides = document.querySelectorAll('.slide');
+                this.dots = document.querySelectorAll('.slider-dot');
+                
+                this.init();
+                window.addEventListener('resize', () => this.updateSlideVisibility());
+            }
+
+            init() {
+                this.updateSlideVisibility();
+                this.updateDots();
+            }
+
+            nextSlide() {
+                if (this.currentSlide < this.totalSlides - 1) {
+                    this.currentSlide++;
+                } else {
+                    this.currentSlide = 0;
+                }
+                this.updateSlideVisibility();
+                this.updateDots();
+            }
+
+            prevSlide() {
+                if (this.currentSlide > 0) {
+                    this.currentSlide--;
+                } else {
+                    this.currentSlide = this.totalSlides - 1;
+                }
+                this.updateSlideVisibility();
+                this.updateDots();
+            }
+
+            goToSlide(index) {
+                this.currentSlide = index;
+                this.updateSlideVisibility();
+                this.updateDots();
+            }
+
+            updateSlideVisibility() {
+                this.slides.forEach((slide, index) => {
+                    slide.style.position = 'absolute';
+                    slide.style.objectFit = 'contain';
+                    slide.style.borderRadius = '4px';
+                    slide.style.paddingRight = '1.75em';
+                    slide.style.transition = 'transform 0.3s ease-in-out';
+                    
+                    // Different aspect ratios and sizing based on viewport width
+                    if (window.innerWidth < 480) {
+                        // Square aspect ratio for very small screens
+                        slide.style.width = `${window.innerWidth - 24}px`;
+                        slide.style.height = `${window.innerWidth - 24}px`;
+                        slide.style.aspectRatio = '1 / 1';
+                        slide.style.maxWidth = 'none';
+                        slide.style.maxHeight = 'none';
+                    } else if (window.innerWidth < 844) {
+                        // Scale down proportionally until 844px viewport width
+                        const scale = window.innerWidth / 844;
+                        slide.style.width = 'clamp(290px, 100%, 843px)';
+                        slide.style.height = 'auto';
+                        slide.style.aspectRatio = '843 / 463';
+                        slide.style.maxWidth = `${843 * scale}px`;
+                        slide.style.maxHeight = `${463 * scale}px`;
+                    } else {
+                        // Full size for larger screens
+                        slide.style.width = 'clamp(290px, 100%, 843px)';
+                        slide.style.height = 'auto';
+                        slide.style.aspectRatio = '843 / 463';
+                        slide.style.maxWidth = 'none';
+                        slide.style.maxHeight = 'none';
+                    }
+
+                    const translateX = (index - this.currentSlide) * 100;
+                    slide.style.transform = `translateX(${translateX}%)`;
+                });
+            }
+
+            updateDots() {
+                this.dots.forEach((dot, index) => {
+                    if (index === this.currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Initialize carousel when page loads
+        let carousel;
+        document.addEventListener('DOMContentLoaded', () => {
+            carousel = new SimpleCarousel();
+        });
+    </script>
+</body>
+</html>
