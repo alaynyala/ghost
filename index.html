@@ -15,11 +15,18 @@
             opacity: 1;
         }
     }
+    
         /* Component Structure */
+
+        html {
+            overflow-x: hidden;
+        }
+
         body {
-            width: 100vw;
+            width: auto;
             margin: 0;
             padding: 0;
+            overflow: hidden !important;
         }
 
         .carousel {
@@ -33,15 +40,30 @@
             padding: 10rem;
             padding-right: 0;
             background: linear-gradient(90deg, #f15c22 0%, #f7931d 50%, #ffc840 100%);
+            background-size: 200% 200%;
             overflow: hidden;
+            user-select: none;
+            touch-action: pan-y pinch-zoom;
+            outline: none;
+            transition: background 2s ease-in-out 0.6s;
         }
+
+        .carousel:focus {
+            outline: 2px solid #ffc840;
+            outline-offset: 2px;
+        }
+
+        /* Drag functionality disabled */
+        /* .carousel:active {
+            cursor: grabbing;
+        } */
 
         .carousel-inner {
             display: grid;
             grid-template-columns: auto auto;
             gap: 60px;
             width: 100%;
-            height: min(530px, max(100vh));
+            height: clamp(330px, 550px, 100vh);
             overflow-x: hidden;
             align-content: center;
             align-items: center;
@@ -50,13 +72,14 @@
 
         .carousel-left {
             width: clamp(260px, 298px, 300px);
+            margin: 1rem;
              
         }
 
         .carousel-right {
             width: clamp(290px, 1510px, 1520px);
             height: 530px;
-            animation: fadeIn 1s ease-out 0.7s both;
+            animation: fadeIn 1s cubic-bezier(.28,.65,.01,1) 0.7s both;
         }
 
 
@@ -77,7 +100,7 @@
             flex-direction: row;
             justify-content: start;
             gap: 1.5em;
-            animation: fadeIn 1s linear .6s both;
+            animation: fadeIn 1s cubic-bezier(.28,.65,.01,1) .6s both;
         }
 
         .slider-nav-buttons-mb {
@@ -119,7 +142,7 @@
             justify-content: center;
             align-items: center;
             transition: all 0.2s ease-in-out;
-            animation: fadeIn 1s ease-out 1s both;
+            animation: fadeIn 1s cubic-bezier(.28,.65,.01,1) 1s both;
         }
          
         .carousel-button-cta:hover {
@@ -185,10 +208,11 @@
             color: #fff;
             letter-spacing: -0.02em;
             line-height: 2.6875rem;
+            opacity: 0;
             margin: clamp(1rem, 2vw, 1.5rem) 0 0 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            animation: fadeIn 1s ease-in-out 0.6;
+            animation: fadeIn 1s cubic-bezier(.28,.65,.01,1) 0.6s forwards;
         }
 
         h2.animated {
@@ -206,7 +230,7 @@
             opacity: 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            animation: fadeIn 1s ease-out 0.7s forwards;
+            animation: fadeIn 1s cubic-bezier(.28,.65,.01,1) 0.7s forwards;
         }
 
         p.animated {
@@ -217,7 +241,6 @@
             scale: 1.1;
             box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.6);
         }
-
 
         .play-button {
             display: block;
@@ -238,7 +261,9 @@
             object-fit: cover;
             border-radius: 4px;
             padding-right: 2em;
+            pointer-events: none; 
         }
+
 
         @media (max-width: 1024px) {
             .carousel {
@@ -284,6 +309,19 @@
             }
         }
 
+        @media (max-width: 810px) {
+            .carousel-left {
+                margin: 0;
+            }
+            .carousel-right {
+                height: 440px;
+            }
+
+            .slider-container {
+                height: 36vh;
+            }
+        }
+
         @media (max-width: 768px) {
 
             .carousel-inner {
@@ -311,13 +349,20 @@
         @media (max-width: 440px) {
 
             .carousel {
-                padding: 3rem;
+                padding: 2rem 1rem;
                 padding-right: 0;
+                height: 100vh;
+            }
+
+            .carousel-inner {
+                width: 92vw;
+
             }
             .carousel-left {
                 width: 98%;
                 height: 100%;
                 order: 1;
+                padding-top: 2.5rem;
             }
 
             .content-container {
@@ -359,7 +404,7 @@
         @media (max-width: 393px) {
 
             .carousel {
-                height: 100vh;
+                height: 100%;
             }
 
             .carousel-inner {
@@ -367,7 +412,7 @@
                 overflow-y: visible;
             }
             .slider-container {
-                height: 52vh;
+                height: 48vh;
             }
             .slider-nav-buttons-mb {
                 display: flex !important;
@@ -388,6 +433,13 @@
             }
         }
 
+        @media (max-width: 375px) {
+            .slider-container {
+                height: 42vh;
+                padding-bottom: 1rem;
+            }
+        }
+
 
     </style>
 </head>
@@ -397,14 +449,14 @@
             <div class="carousel-left">
                 <div class="content-container">
                     <div class="slider-nav-buttons-dt">
-                        <button class="carousel-button-lt" onclick="carousel.prevSlide()">
-                            <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <button class="carousel-button-lt" onclick="carousel.prevSlide()" aria-label="Previous slide">
+                            <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M8.66667 1L2.00001 7.66667L8.66667 14.3333" stroke="white" stroke-width="1.5" />
                                 <path d="M2 7.66665L18 7.66666" stroke="white" stroke-width="1.5" />
                             </svg>
                         </button>
-                        <button class="carousel-button-rt" onclick="carousel.nextSlide()">
-                            <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <button class="carousel-button-rt" onclick="carousel.nextSlide()" aria-label="Next slide">
+                            <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M9.33333 1L16 7.66667L9.33333 14.3333" stroke="white" stroke-width="1.5" />
                                 <path d="M16 7.66665L-4.76837e-07 7.66666" stroke="white" stroke-width="1.5" />
                             </svg>
@@ -431,20 +483,20 @@
                 </div>
             </div>
             <div class="carousel-right">
-                <div class="slider-nav-buttons-mb">
-                    <button class="carousel-button-lt" onclick="carousel.prevSlide()">
-                        <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8.66667 1L2.00001 7.66667L8.66667 14.3333" stroke="white" stroke-width="1.5" />
-                            <path d="M2 7.66665L18 7.66666" stroke="white" stroke-width="1.5" />
-                        </svg>
-                    </button>
-                    <button class="carousel-button-rt" onclick="carousel.nextSlide()">
-                        <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.33333 1L16 7.66667L9.33333 14.3333" stroke="white" stroke-width="1.5" />
-                            <path d="M16 7.66665L-4.76837e-07 7.66666" stroke="white" stroke-width="1.5" />
-                        </svg>
-                    </button>
-                </div>
+                    <div class="slider-nav-buttons-mb">
+                        <button class="carousel-button-lt" onclick="carousel.prevSlide()" aria-label="Previous slide">
+                            <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M8.66667 1L2.00001 7.66667L8.66667 14.3333" stroke="white" stroke-width="1.5" />
+                                <path d="M2 7.66665L18 7.66666" stroke="white" stroke-width="1.5" />
+                            </svg>
+                        </button>
+                        <button class="carousel-button-rt" onclick="carousel.nextSlide()" aria-label="Next slide">
+                            <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path d="M9.33333 1L16 7.66667L9.33333 14.3333" stroke="white" stroke-width="1.5" />
+                                <path d="M16 7.66665L-4.76837e-07 7.66666" stroke="white" stroke-width="1.5" />
+                            </svg>
+                        </button>
+                    </div>
                 <div class="slider-container">
                     <div class="slide" id="slide-0">
                         <button class="play-button">
@@ -488,12 +540,32 @@
             constructor() {
                 this.currentSlide = 0;
                 this.totalSlides = 3;
-                this.slides = document.querySelectorAll('.slide');
+                
+                // Get slides in the correct order
+                const allSlides = document.querySelectorAll('.slide');
+                this.slides = Array.from(allSlides).sort((a, b) => {
+                    const aIndex = parseInt(a.id.replace('slide-', ''));
+                    const bIndex = parseInt(b.id.replace('slide-', ''));
+                    return aIndex - bIndex;
+                });
+                
+                // Ensure slides are in DOM order
+                this.slides.forEach((slide, index) => {
+                    slide.style.order = index;
+                });
+                
                 this.dots = document.querySelectorAll('.slider-dot');
                 this.desktopButtons = document.querySelector('.slider-nav-buttons-dt');
                 this.mobileButtons = document.querySelector('.slider-nav-buttons-mb');
                 
+                // Touch tracking variables
+                this.touchStartX = 0;
+                this.touchEndX = 0;
+                this.minSwipeDistance = 50; // Minimum distance for a swipe
+                
                 this.init();
+                this.addTouchListeners();
+                
                 window.addEventListener('resize', () => {
                     this.updateSlideVisibility();
                     this.updateButtonVisibility();
@@ -501,9 +573,23 @@
             }
 
             init() {
+                // Force correct initial state
+                this.currentSlide = 0;
+                
+                // Ensure slides are properly ordered
+                this.slides.forEach((slide, index) => {
+                    slide.style.order = index;
+                });
+                
                 this.updateSlideVisibility();
                 this.updateDots();
                 this.updateButtonVisibility();
+                this.updateBackgroundGradient();
+                
+                // Double-check after a brief delay
+                setTimeout(() => {
+                    this.updateSlideVisibility();
+                }, 100);
             }
 
             nextSlide() {
@@ -512,8 +598,10 @@
                 } else {
                     this.currentSlide = 0;
                 }
+                console.log('Next slide - Current slide:', this.currentSlide + 1);
                 this.updateSlideVisibility();
                 this.updateDots();
+                this.updateBackgroundGradient();
             }
 
             prevSlide() {
@@ -522,32 +610,55 @@
                 } else {
                     this.currentSlide = this.totalSlides - 1;
                 }
+                //console.log('Previous slide - Current slide:', this.currentSlide + 1);
                 this.updateSlideVisibility();
                 this.updateDots();
+                this.updateBackgroundGradient();
             }
 
             goToSlide(index) {
                 this.currentSlide = index;
+                //console.log('Go to slide - Current slide:', this.currentSlide + 1);
                 this.updateSlideVisibility();
                 this.updateDots();
+                this.updateBackgroundGradient();
+            }
+
+            updateBackgroundGradient() {
+                const carousel = document.querySelector('.carousel');
+                
+                // Define gradient stops for each slide
+                const gradients = [
+                    'linear-gradient(90deg, #f15c22 0%, #f7931d 50%, #ffc840 100%)', // Slide 1
+                    'linear-gradient(90deg, #f15c22 0%, #f7931d 30%, #ffc840 100%)', // Slide 2  
+                    'linear-gradient(90deg, #f15c22 0%, #f7931d 25%, #ffc840 100%)'  // Slide 3
+                ];
+                
+                // Apply the gradient for the current slide
+                carousel.style.background = gradients[this.currentSlide];
             }
 
             updateSlideVisibility() {
+                //console.log('Slides order:', this.slides.map(slide => slide.id));
+               //console.log('Current slide index:', this.currentSlide);
+                
                 this.slides.forEach((slide, index) => {
                     slide.style.position = 'absolute';
                     slide.style.objectFit = 'contain';
                     slide.style.borderRadius = '4px';
                     slide.style.paddingRight = '1.75em';
-                    slide.style.transition = 'transform 0.3s ease-in-out';
-                    
+                    slide.style.transition = 'transform 0.6s ease-in-out, opacity 0.3s ease-in-out';
+
                     // Different aspect ratios and sizing based on viewport width
                     if (window.innerWidth < 440) {
                         // Square aspect ratio for very small screens
-                        slide.style.width = `${window.innerWidth - 24}px`;
+                        slide.style.width = `${window.innerWidth - 72}px`;
                         slide.style.aspectRatio = '1';
                         slide.style.maxWidth = 'none';
                         slide.style.maxHeight = 'none';
-                        slide.style.paddingRight = '2em';
+                        slide.style.paddingRight = '.25em';
+                        slide.style.borderRadius = '4px';
+                        slide.style.objectFit = 'cover';
                     } else if (window.innerWidth < 768) {
                         // Scale down proportionally until 844px viewport width
                         const scale = window.innerWidth / 768;
@@ -565,8 +676,22 @@
                         slide.style.maxHeight = 'none';
                     }
 
+                    // Calculate position for standard carousel
                     const translateX = (index - this.currentSlide) * 100;
+                    
+                    // Hide slides that are not in view (more than 100% away)
+                    if (Math.abs(translateX) > 100) {
+                        slide.style.opacity = '0!important';
+                        slide.style.pointerEvents = 'none';
+                        slide.style.zIndex = '-1';
+                    } else {
+                        slide.style.opacity = '1';
+                        slide.style.pointerEvents = 'auto';
+                        slide.style.zIndex = 'auto';
+                    }
+                    
                     slide.style.transform = `translateX(${translateX}%)`;
+                    console.log(`Slide ${slide.id}: index=${index}, translateX=${translateX}%, visible: ${Math.abs(translateX) <= 100}`);
                 });
             }
 
@@ -579,19 +704,91 @@
                     }
                 });
             }
-            
+
             updateButtonVisibility() {
-            if (window.innerWidth <= 440) {
-                //Mobile Layout
-                this.desktopButtons.style.display = 'none !important';
-                this.mobileButtons.style.display = 'flex !important';
-            } else {
-                //Desktop/Tablet Layout
-                this.desktopButtons.style.display = 'flex !important';
-                this.mobileButtons.style.display = 'none !important';
+                if (window.innerWidth <= 440) {
+                    //Mobile Layout
+                    this.desktopButtons.style.display = 'none !important';
+                    this.mobileButtons.style.display = 'flex !important';
+                } else {
+                    //Desktop/Tablet Layout
+                    this.desktopButtons.style.display = 'flex !important';
+                    this.mobileButtons.style.display = 'none !important';
+                }
+            }
+
+            addTouchListeners() {
+                const carousel = document.querySelector('.carousel');
+                
+                // Touch start - track initial position
+                carousel.addEventListener('touchstart', (e) => {
+                    this.touchStartX = e.changedTouches[0].screenX;
+                    // Prevent default to avoid scrolling while swiping
+                    e.preventDefault();
+                }, { passive: false });
+                
+                // Touch end - handle swipe gesture
+                carousel.addEventListener('touchend', (e) => {
+                    this.touchEndX = e.changedTouches[0].screenX;
+                    this.handleSwipe();
+                    e.preventDefault();
+                }, { passive: false });
+                
+                // Touch cancel - reset state
+                carousel.addEventListener('touchcancel', () => {
+                    this.touchStartX = 0;
+                    this.touchEndX = 0;
+                }, { passive: true });
+            }
+
+
+
+            handleSwipe() {
+                const swipeDistance = this.touchEndX - this.touchStartX;
+                
+                if (Math.abs(swipeDistance) > this.minSwipeDistance) {
+                    // Add haptic feedback on supported devices
+                    if (navigator.vibrate) {
+                        navigator.vibrate(50);
+                    }
+                    
+                    if (swipeDistance > 0) {
+                        // Swipe right - go to previous slide
+                        this.prevSlide();
+                        this.announceSlideChange('previous');
+                    } else {
+                        // Swipe left - go to next slide
+                        this.nextSlide();
+                        this.announceSlideChange('next');
+                    }
+                }
+                
+                // Reset touch coordinates
+                this.touchStartX = 0;
+                this.touchEndX = 0;
+            }
+
+            announceSlideChange(direction) {
+                // Create or update live region for screen readers
+                let liveRegion = document.getElementById('carousel-live-region');
+                if (!liveRegion) {
+                    liveRegion = document.createElement('div');
+                    liveRegion.id = 'carousel-live-region';
+                    liveRegion.setAttribute('aria-live', 'polite');
+                    liveRegion.setAttribute('aria-atomic', 'true');
+                    liveRegion.style.position = 'absolute';
+                    liveRegion.style.left = '-10000px';
+                    liveRegion.style.width = '1px';
+                    liveRegion.style.height = '1px';
+                    liveRegion.style.overflow = 'hidden';
+                    document.body.appendChild(liveRegion);
+                }
+                
+                const slideNumber = this.currentSlide + 1;
+                const totalSlides = this.totalSlides;
+                liveRegion.textContent = `Slide ${slideNumber} of ${totalSlides}`;
             }
         }
-    }
 
         // Initialize carousel when page loads
         let carousel;
