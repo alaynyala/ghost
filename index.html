@@ -512,7 +512,8 @@
                         </button>
                     </div>
                 <div class="slider-container">
-                    <div class="slide" id="slide-0">
+                    <div class="slide" id="slide-0" data-title="The Roberts Family's Story" data-description="The circumstances that might lead to homelessness
+                    can include loss of income or transportation, a falling out with loved ones, or an abrupt economic downturn. For Brandon and Jennifer, it was all of these things.">
                         <button class="play-button">
                             <svg width="68" height="40" viewBox="0 0 68 40" fill="none">
                                 <rect width="68" height="40" rx="4" fill="#F15C22" />
@@ -521,7 +522,8 @@
                         </button>
                         <img src="https://imagedelivery.net/XPp5SsZ1VHMdZq-5zMXYKA/13072a73-5026-4557-15f9-5629f06faa00/public" alt="Slide 1">
                     </div>
-                    <div class="slide" id="slide-1">
+                    <div class="slide" id="slide-1" data-title="The Williams Family's Story" data-description="Tortor purus nunc quam quis feugiat erat amet. Lectus eget eu risus amet odio urna curabitur enim. 
+                    Est morbi nisi sapien amet eu neque. Fringilla vestibulum hac non vitae vestibulum pellentesque. Aliquam varius urna blandit risus amet at.">
                         <button class="play-button">
                             <svg width="68" height="40" viewBox="0 0 68 40" fill="none">
                                 <rect width="68" height="40" rx="4" fill="#F15C22" />
@@ -530,7 +532,8 @@
                         </button>
                         <img src="https://imagedelivery.net/XPp5SsZ1VHMdZq-5zMXYKA/2b9b764a-751d-491b-1674-07b9ba05dc00/public" alt="Slide 2">
                     </div>
-                    <div class="slide" id="slide-2">
+                    <div class="slide" id="slide-2" data-title="The Smith Family's Story" data-description="Eu nibh in sit sit duis nec adipiscing. Fringilla tempus erat eu felis velit egestas. Laoreet dolor urna habitant tellus tortor. 
+                    In senectus mauris ornare massa morbi in habitant iaculis. Tortor orci pulvinar volutpat mattis sodales.">
                         <button class="play-button">
                             <svg width="68" height="40" viewBox="0 0 68 40" fill="none">
                                 <rect width="68" height="40" rx="4" fill="#F15C22" />
@@ -616,6 +619,7 @@
                 this.updateSlideVisibility();
                 this.updateDots();
                 this.updateBackgroundGradient();
+                this.updateSlideText();
             }
 
             prevSlide() {
@@ -636,6 +640,15 @@
                 this.updateSlideVisibility();
                 this.updateDots();
                 this.updateBackgroundGradient();
+            }
+
+            updateSlideText() {
+                const currentSlideElement = this.slides[this.currentSlide];
+                const title = currentSlideElement.dataset.title;
+                const description = currentSlideElement.dataset.description;
+
+                document.querySelector('.copy h2').textContent = title;
+                document.querySelector('.copy p').textContent = description;
             }
 
             updateBackgroundGradient() {
