@@ -461,13 +461,13 @@
             <div class="carousel-left">
                 <div class="content-container">
                     <div class="slider-nav-buttons-dt">
-                        <button class="carousel-button-lt" onclick="carousel.prevSlide()" aria-label="Previous slide">
+                        <button class="carousel-button-lt" onclick="carousel.prevSlide()" ontouchstart="carousel.prevSlide()" aria-label="Previous slide">
                             <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M8.66667 1L2.00001 7.66667L8.66667 14.3333" stroke="white" stroke-width="1.5" />
                                 <path d="M2 7.66665L18 7.66666" stroke="white" stroke-width="1.5" />
                             </svg>
                         </button>
-                        <button class="carousel-button-rt" onclick="carousel.nextSlide()" aria-label="Next slide">
+                        <button class="carousel-button-rt" onclick="carousel.nextSlide()" ontouchstart="carousel.nextSlide()" aria-label="Next slide">
                             <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M9.33333 1L16 7.66667L9.33333 14.3333" stroke="white" stroke-width="1.5" />
                                 <path d="M16 7.66665L-4.76837e-07 7.66666" stroke="white" stroke-width="1.5" />
@@ -496,13 +496,13 @@
             </div>
             <div class="carousel-right">
                     <div class="slider-nav-buttons-mb">
-                        <button class="carousel-button-lt" onclick="carousel.prevSlide()" aria-label="Previous slide">
+                        <button class="carousel-button-lt" onclick="carousel.prevSlide()" ontouchstart="carousel.prevSlide()" aria-label="Previous slide">
                             <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M8.66667 1L2.00001 7.66667L8.66667 14.3333" stroke="white" stroke-width="1.5" />
                                 <path d="M2 7.66665L18 7.66666" stroke="white" stroke-width="1.5" />
                             </svg>
                         </button>
-                        <button class="carousel-button-rt" onclick="carousel.nextSlide()" aria-label="Next slide">
+                        <button class="carousel-button-rt" onclick="carousel.nextSlide()" ontouchstart="carousel.nextSlide()" aria-label="Next slide">
                             <svg width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                 <path d="M9.33333 1L16 7.66667L9.33333 14.3333" stroke="white" stroke-width="1.5" />
                                 <path d="M16 7.66665L-4.76837e-07 7.66666" stroke="white" stroke-width="1.5" />
@@ -538,9 +538,9 @@
                         <img src="https://imagedelivery.net/XPp5SsZ1VHMdZq-5zMXYKA/7fa1e0a1-d30a-447e-7d19-6ddbaf333400/public" alt="Slide 3">
                     </div>
                     <div class="slider-dots" id="slider-dots">
-                        <div class="slider-dot active" onclick="carousel.goToSlide(0)"></div>
-                        <div class="slider-dot" onclick="carousel.goToSlide(1)"></div>
-                        <div class="slider-dot" onclick="carousel.goToSlide(2)"></div>
+                        <div class="slider-dot active" onclick="carousel.goToSlide(0)" ontouchstart="carousel.goToSlide(0)"></div>
+                        <div class="slider-dot" onclick="carousel.goToSlide(1)" ontouchstart="carousel.goToSlide(1)"></div>
+                        <div class="slider-dot" onclick="carousel.goToSlide(2)" ontouchstart="carousel.goToSlide(2)"></div>
                     </div>
                 </div>
             </div>
